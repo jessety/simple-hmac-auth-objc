@@ -19,7 +19,12 @@ class ViewController: UIViewController {
         client.settings.setValue("localhost", forKey: "host")
         client.settings.setValue(8000, forKey: "port");
         
-        client.call("GET", path: "/items/", query: nil, body: nil) { (response, error) in
+        let body = [
+            "dimensions" : "valid",
+            "weight" : "valid"
+        ]
+        
+        client.call("POST", path: "/items/", query: [ "type": "body" ], body: body) { (response, error) in
             
             guard error == nil else {
                 
@@ -29,7 +34,11 @@ class ViewController: UIViewController {
             }
             
             print("Request succeeded")
-            print("\(response!)")
+            
+            if let response = response {
+                
+                print("Response: \(response)")
+            }
         }
     }
 }
