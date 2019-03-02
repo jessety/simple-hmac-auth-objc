@@ -210,7 +210,7 @@ NSDateFormatter *_dateFormatter;
         
         NSString *signature = [self sign:headers method:method path:path queryString:queryString body:bodyData];
         
-        headers[@"signature"] = [NSString stringWithFormat:@"v2 sha256 %@", signature];
+        headers[@"signature"] = [NSString stringWithFormat:@"simple-hmac-auth sha256 %@", signature];
     }
     
     [self _send:headers method:method path:path queryString:queryString body:bodyData completion:completion];
