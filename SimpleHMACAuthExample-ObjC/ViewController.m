@@ -31,12 +31,12 @@
         
         if (error) {
             
-            NSLog(@"Error:", error);
+            NSLog(@"Error: %@", error);
             return;
         }
         
         NSLog(@"Request Succeeded");
-        NSLog(@"%@", response)
+        NSLog(@"Response: %@", response);
     }];
     
 }
