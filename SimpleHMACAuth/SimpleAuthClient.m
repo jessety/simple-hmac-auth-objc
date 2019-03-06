@@ -130,7 +130,7 @@ NSDateFormatter *_dateFormatter;
     NSData *bodyData = nil;
     NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
     
-    headers[@"x-api-key"] = self.apiKey;
+    headers[@"authorization"] = [NSString stringWithFormat:@"api-key %@", self.apiKey];
     headers[@"date"] = [_dateFormatter stringFromDate:now];
     
     // Construct a string from the query dictionary
@@ -210,7 +210,7 @@ NSDateFormatter *_dateFormatter;
         
         NSString *signature = [self sign:headers method:method path:path queryString:queryString body:bodyData];
         
-        headers[@"authorization"] = [NSString stringWithFormat:@"signature sha256 %@", signature];
+        headers[@"signature"] = [NSString stringWithFormat:@"simple-hmac-auth sha256 %@", signature];
     }
     
     [self _send:headers method:method path:path queryString:queryString body:bodyData completion:completion];
@@ -235,7 +235,7 @@ NSDateFormatter *_dateFormatter;
     
     // Only sign these headers
     NSArray *allowedHeaders = @[
-                                @"x-api-key",
+                                @"authorization",
                                 @"date",
                                 @"content-length",
                                 @"content-type"
